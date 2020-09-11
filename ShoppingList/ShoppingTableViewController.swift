@@ -45,13 +45,16 @@ class ShoppingTableViewController: UITableViewController {
             let entity = NSEntityDescription.entity(forEntityName: "Grocery", in: self.managedObjectContext!)
             let grocery = NSManagedObject(entity: entity!, insertInto: self.managedObjectContext)
             grocery.setValue(textField?.text, forKey: "item")
-            do {
-                //saving grocery item
-                try self.managedObjectContext?.save()            }
-            catch{
-                fatalError("Error to store Grocery item")
-            }
-            self.loadData()
+            
+            
+            self.savingChanges(message: "Error to store Grocery item")
+            //            do {
+            //                //saving grocery item
+            //                try self.managedObjectContext?.save()            }
+            //            catch{
+            //                fatalError("Error to store Grocery item")
+            //            }
+            //            self.loadData()
             
         }
         //end addAction
@@ -107,6 +110,7 @@ class ShoppingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
+            //Homework - adding Delete Warning
             let alert = UIAlertController(title: "Are you sure you want to delete?", message: nil, preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -117,29 +121,34 @@ class ShoppingTableViewController: UITableViewController {
                 }, completion: nil)
             }))
             self.present(alert, animated: true )
-
+            
+            //2 rows below was the code before adding Delete Alert Warning
             //    managedObjectContext?.delete(groseries[indexPath.row])
             //tableView.reloadRows(at: [indexPath], with: .automatic)
         }
-        do {
-            //saving what was deleted
-            try self.managedObjectContext?.save()            }
-        catch{
-            fatalError("Error to deleting Grocery item")
-        }
-        loadData()
+        
+        savingChanges(message: "Error to deleting Grocery item")
+        //        do {
+        //            //saving what was deleted
+        //            try self.managedObjectContext?.save()            }
+        //        catch{
+        //            fatalError("Error to deleting Grocery item")
+        //        }
+        //        loadData()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         groseries[indexPath.row].completed = !groseries[indexPath.row].completed
-        do {
-            //saving check mark ??
-            try self.managedObjectContext?.save()            }
-        catch{
-            fatalError("Error to checkmark Grocery item")
-        }
-        loadData()
+        
+        savingChanges(message: "Error to checkmark Grocery item")
+        //        do {
+        //            //saving check mark ??
+        //            try self.managedObjectContext?.save()            }
+        //        catch{
+        //            fatalError("Error to checkmark Grocery item")
+        //        }
+        //        loadData()
     }
     
     // animation on clicking
@@ -148,6 +157,16 @@ class ShoppingTableViewController: UITableViewController {
         UIView.animate(withDuration: 0.9) {
             cell.transform = CGAffineTransform.identity
         }
+    }
+    
+    //Homework function
+    func savingChanges(message: String) {
+        do {
+            try self.managedObjectContext?.save()            }
+        catch{
+            fatalError(message)
+        }
+        loadData()
     }
     
     
