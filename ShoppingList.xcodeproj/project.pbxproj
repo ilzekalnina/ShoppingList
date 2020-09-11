@@ -9,23 +9,23 @@
 /* Begin PBXBuildFile section */
 		77EC9E0725092EB300469584 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC9E0625092EB300469584 /* AppDelegate.swift */; };
 		77EC9E0925092EB300469584 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC9E0825092EB300469584 /* SceneDelegate.swift */; };
-		77EC9E0B25092EB300469584 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC9E0A25092EB300469584 /* ViewController.swift */; };
 		77EC9E0E25092EB300469584 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77EC9E0C25092EB300469584 /* Main.storyboard */; };
 		77EC9E1125092EB300469584 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77EC9E0F25092EB300469584 /* ShoppingList.xcdatamodeld */; };
 		77EC9E1325092EB500469584 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77EC9E1225092EB500469584 /* Assets.xcassets */; };
 		77EC9E1625092EB500469584 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77EC9E1425092EB500469584 /* LaunchScreen.storyboard */; };
+		77EC9E1E2509305500469584 /* ShoppingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC9E1D2509305500469584 /* ShoppingTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		77EC9E0325092EB300469584 /* ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77EC9E0625092EB300469584 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		77EC9E0825092EB300469584 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		77EC9E0A25092EB300469584 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		77EC9E0D25092EB300469584 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		77EC9E1025092EB300469584 /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
 		77EC9E1225092EB500469584 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77EC9E1525092EB500469584 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		77EC9E1725092EB500469584 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		77EC9E1D2509305500469584 /* ShoppingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +60,12 @@
 			children = (
 				77EC9E0625092EB300469584 /* AppDelegate.swift */,
 				77EC9E0825092EB300469584 /* SceneDelegate.swift */,
-				77EC9E0A25092EB300469584 /* ViewController.swift */,
 				77EC9E0C25092EB300469584 /* Main.storyboard */,
 				77EC9E1225092EB500469584 /* Assets.xcassets */,
 				77EC9E1425092EB500469584 /* LaunchScreen.storyboard */,
 				77EC9E1725092EB500469584 /* Info.plist */,
 				77EC9E0F25092EB300469584 /* ShoppingList.xcdatamodeld */,
+				77EC9E1D2509305500469584 /* ShoppingTableViewController.swift */,
 			);
 			path = ShoppingList;
 			sourceTree = "<group>";
@@ -141,8 +141,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77EC9E0B25092EB300469584 /* ViewController.swift in Sources */,
 				77EC9E1125092EB300469584 /* ShoppingList.xcdatamodeld in Sources */,
+				77EC9E1E2509305500469584 /* ShoppingTableViewController.swift in Sources */,
 				77EC9E0725092EB300469584 /* AppDelegate.swift in Sources */,
 				77EC9E0925092EB300469584 /* SceneDelegate.swift in Sources */,
 			);
