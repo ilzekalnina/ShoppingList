@@ -106,8 +106,20 @@ class ShoppingTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            managedObjectContext?.delete(groseries[indexPath.row])
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+            
+            let alert = UIAlertController(title: "Are you sure you want to delete?", message: nil, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { (_) in
+                self.managedObjectContext?.delete(self.groseries[indexPath.row])
+                UIView.transition(with: tableView, duration: 1.0, options: .transitionCrossDissolve, animations: {
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                }, completion: nil)
+            }))
+            self.present(alert, animated: true )
+
+            //    managedObjectContext?.delete(groseries[indexPath.row])
+            //tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         do {
             //saving what was deleted
@@ -137,6 +149,6 @@ class ShoppingTableViewController: UITableViewController {
             cell.transform = CGAffineTransform.identity
         }
     }
-
+    
     
 }
