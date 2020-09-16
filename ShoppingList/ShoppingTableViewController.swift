@@ -15,15 +15,22 @@ class ShoppingTableViewController: UITableViewController {
     
     //  var gros = [String]()
     
-    var managedObjectContext: NSManagedObjectContext?
+    var context: NSManagedObjectContext?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        managedObjectContext = appDelegate.persistentContainer.viewContext
-        loadData()
+        context = appDelegate.persistentContainer.viewContext
+  //      loadData()
+        //this is for Liya app, to see the way
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        loadData()
     }
     
     @IBAction func addNewItemTapped(_ sender: Any) {
@@ -35,29 +42,29 @@ class ShoppingTableViewController: UITableViewController {
         //alert window
         let alertController = UIAlertController(title: "Grosery Item!", message: "What do you want to buy?", preferredStyle: .alert)
         alertController.addTextField { (textField: UITextField) in
+            //Text below will be shown in the field, where to write item
+            textField.placeholder = "Enter the title of your task"
+            //The first letter of the item will automatically turn to Big letter - Tea, Sugar
+            textField.autocapitalizationType = .sentences
         }
         //add button
         let addAction = UIAlertAction(title: "Add", style: .cancel) { (action: UIAlertAction) in
             
+            
             let textField = alertController.textFields?.first
-            //            self.gros.append(textField!.text!)
-            //            self.tableView.reloadData()
-            let entity = NSEntityDescription.entity(forEntityName: "Grocery", in: self.managedObjectContext!)
-            let grocery = NSManagedObject(entity: entity!, insertInto: self.managedObjectContext)
+            
+            
+            let entity = NSEntityDescription.entity(forEntityName: "Grocery", in: self.context!)
+            let grocery = NSManagedObject(entity: entity!, insertInto: self.context)
             grocery.setValue(textField?.text, forKey: "item")
             
-            
-            self.savingChanges(message: "Error to store Grocery item")
-            //            do {
-            //                //saving grocery item
-            //                try self.managedObjectContext?.save()            }
-            //            catch{
-            //                fatalError("Error to store Grocery item")
-            //            }
-            //            self.loadData()
+      //      self.groseries.append(grocery as! Grocery)
+            self.saveData()
+
             
         }
         //end addAction
+        
         //cancel button
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         alertController.addAction(addAction)
@@ -65,18 +72,35 @@ class ShoppingTableViewController: UITableViewController {
         present(alertController, animated: true)
     }
     
+    //MARK:-Func for CoreData - save, load
+    //#warning some trouble there - if uncomented, then it shows up as yellow
+    
     //to reload table view
     func loadData(){
         let request: NSFetchRequest<Grocery> = Grocery.fetchRequest()
         do{
-            let result = try managedObjectContext?.fetch(request)
+            let result = try context?.fetch(request)
             groseries = result!
-            tableView.reloadData()
+            
         } catch {
-            fatalError("Error in retrieving Grocery items")
+            fatalError(error.localizedDescription)
         }
+        tableView.reloadData()
         
     }
+    
+
+    
+    func saveData(){
+        do {
+            //saving grocery item
+            try self.context?.save()            }
+        catch{
+            fatalError(error.localizedDescription)
+        }
+        self.loadData()
+    }
+    
     // MARK: - Table view data source
     
     
@@ -111,14 +135,18 @@ class ShoppingTableViewController: UITableViewController {
         if editingStyle == .delete {
             
             //Homework - adding Delete Warning
-            let alert = UIAlertController(title: "Are you sure you want to delete?", message: nil, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Delete?", message: "Are you sure you want to delete?", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { (_) in
-                self.managedObjectContext?.delete(self.groseries[indexPath.row])
-                UIView.transition(with: tableView, duration: 1.0, options: .transitionCrossDissolve, animations: {
-                    tableView.reloadRows(at: [indexPath], with: .automatic)
-                }, completion: nil)
+                let item = self.groseries[indexPath.row]
+    
+                
+                self.context?.delete(item)
+      //          tableView.reloadRows(at: [indexPath], with: .automatic)
+                self.saveData()
+                
+
             }))
             self.present(alert, animated: true )
             
@@ -127,7 +155,7 @@ class ShoppingTableViewController: UITableViewController {
             //tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         
-        savingChanges(message: "Error to deleting Grocery item")
+        saveData()
         //        do {
         //            //saving what was deleted
         //            try self.managedObjectContext?.save()            }
@@ -138,10 +166,11 @@ class ShoppingTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         tableView.deselectRow(at: indexPath, animated: true)
         groseries[indexPath.row].completed = !groseries[indexPath.row].completed
         
-        savingChanges(message: "Error to checkmark Grocery item")
+        saveData()
         //        do {
         //            //saving check mark ??
         //            try self.managedObjectContext?.save()            }
@@ -159,15 +188,20 @@ class ShoppingTableViewController: UITableViewController {
         }
     }
     
-    //Homework function
-    func savingChanges(message: String) {
-        do {
-            try self.managedObjectContext?.save()            }
-        catch{
-            fatalError(message)
-        }
-        loadData()
-    }
+    /*
+     //Homework function
+     func savingChanges(message: String) {
+     do {
+     try self.context?.save()            }
+     catch{
+     fatalError(message)
+     }
+     
+     // loadData()
+     tableView.reloadData()
+     
+     }
+     */
     
     
 }
